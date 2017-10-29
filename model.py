@@ -63,7 +63,7 @@ def get_batchnorm_model(conv_model, p):
     model.add(Dense(10, activation='softmax'))
     return model
 
-class DogsVsCatsModelBuilder(object):
+class ModelBuilder(object):
     def __init__(self, training_data_provider, dropout=0.6, batch_size=64):
         vgg = Vgg16()
         model = vgg.model
@@ -95,7 +95,7 @@ class DogsVsCatsModelBuilder(object):
             self._conv_model.add(layer)
             self._conv_model.layers[-1].set_weights(layer.get_weights())
 
-        return DogsVsCatsModel(
+        return DeepModel(
             data_provider,
             self._conv_model,
             self._train_feature_set.classes)
@@ -137,7 +137,7 @@ class DogsVsCatsModelBuilder(object):
                 self._valid_feature_set.features,
                 self._valid_feature_set.labels))
 
-class DogsVsCatsModel(object):
+class DeepModel(object):
     def __init__(self, data_provider, model, classes):
         self._data_provider = data_provider
         self._model = model
